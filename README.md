@@ -1,8 +1,22 @@
-Quarkus AMQP 1.0 Quickstart
+Quarkus IBM MQ - AMQP 1.0 Support Demo
 ============================
 
-This project illustrates how you can interact with AMQP 1.0 (Apache Artemis in this quickstart) using MicroProfile Reactive Messaging.
-The complete instructions are available on https://quarkus.io/guides/amqp.
+This project modifies the [Quarkus AMQP 1.0 Quickstart](https://quarkus.io/guides/amqp) to serve as an example of using IBM MQ Broker with AMQP 1.0 support with Quarkus and MicroProfile Reactive Messaging.
+
+## Pull and start the IBM MQ Broker with AMQP support enabled
+
+```bash
+> docker run --name=mq --env LICENSE=accept \
+--env MQ_QMGR_NAME=QM1 \
+--env MQ_APP_PASSWORD=passw0rd \
+--publish 1414:1414 \
+--publish 9443:9443 \
+--publish 5672:5672 \
+--detach \
+quay.io/ogunalp/mq-amqp:latest
+```
+
+Make sure both applications have `amqp-host` and `amqp-port` configuration properties are set to the running MQ container.
 
 ## Start the application in dev mode
 

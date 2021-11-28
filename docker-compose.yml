@@ -2,15 +2,16 @@ version: '2'
 
 services:
 
-  artemis:
-    image: quay.io/artemiscloud/activemq-artemis-broker:0.1.2
+  mq:
+    image: quay.io/ogunalp/mq-amqp:latest
     ports:
-      - "8161:8161"
-      - "61616:61616"
+      - "1414:1414"
+      - "9443:9443"
       - "5672:5672"
     environment:
-      AMQ_USER: quarkus
-      AMQ_PASSWORD: quarkus
+      LICENSE: accept
+      MQ_QMGR_NAME: QM1
+      MQ_APP_PASSWORD: passw0rd
     networks:
       - amqp-quickstart-network
 
@@ -20,7 +21,7 @@ services:
       context: amqp-quickstart-producer
       dockerfile: src/main/docker/Dockerfile.${QUARKUS_MODE:-jvm}
     environment:
-      AMQP_HOST: artemis
+      AMQP_HOST: mq
       AMQP_PORT: 5672
     ports:
       - "8080:8080"
@@ -33,7 +34,7 @@ services:
       context: amqp-quickstart-processor
       dockerfile: src/main/docker/Dockerfile.${QUARKUS_MODE:-jvm}
     environment:
-      AMQP_HOST: artemis
+      AMQP_HOST: mq
       AMQP_PORT: 5672
     networks:
       - amqp-quickstart-network
