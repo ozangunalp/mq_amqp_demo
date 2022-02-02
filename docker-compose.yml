@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
 
@@ -41,4 +41,3 @@ services:
 
 networks:
   amqp-quickstart-network:
-    name: amqp-quickstart
