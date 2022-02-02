@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
 
@@ -12,6 +12,10 @@ services:
       LICENSE: accept
       MQ_QMGR_NAME: QM1
       MQ_APP_PASSWORD: passw0rd
+    healthcheck:
+      test: ["CMD", "sh", "-c", "tail -n 5 /var/mqm/qmgrs/QM1/errors/amqp_0.log | grep 'AMQP Service started successfully'"]
+      interval: 2s
+      retries: 20
     networks:
       - amqp-quickstart-network
 
@@ -23,6 +27,9 @@ services:
     environment:
       AMQP_HOST: mq
       AMQP_PORT: 5672
+    depends_on:
+      mq:
+        condition: service_healthy
     ports:
       - "8080:8080"
     networks:
@@ -36,6 +43,9 @@ services:
     environment:
       AMQP_HOST: mq
       AMQP_PORT: 5672
+    depends_on:
+      mq:
+        condition: service_healthy
     networks:
       - amqp-quickstart-network
 
