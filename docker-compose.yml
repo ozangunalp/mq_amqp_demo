@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   mq:
-    image: quay.io/ogunalp/mq-amqp:latest
+    image: ibm-mqadvanced-server-dev:9.2.4.0-amd64
     ports:
       - "1414:1414"
       - "9443:9443"
